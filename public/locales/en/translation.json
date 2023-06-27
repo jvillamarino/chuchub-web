@@ -1,0 +1,18 @@
+{
+  "pages": {
+    "home": {
+      "title": "Waiters Hub - Home",
+      "description": "Power up your hospitality with Waiter Hub.",
+      "discoverTitle": "Discover and order at <0>Chubchub's</0> most outstanding and renowned restaurants."
+    }
+  },
+  "navbar": {
+    "home": "Home",
+    "restaurants": "Restaurants",
+    "categories": "Categories"
+  },
+  "common": {
+    "restaurants": "Outstanding restaurants",
+    "fastfood": "Fast food"
+  }
+}

@@ -1,0 +1,24 @@
+---
+import { changeLanguage } from 'i18next';
+import { Restaurant } from '../../models/restaurant.interface';
+
+changeLanguage('en');
+
+export async function getStaticPaths() {
+    const restaurants: Restaurant[] = await fetch(
+        'https://api.last.app/frontend-interview/restaurants'
+    ).then((response) => response.json());
+    return restaurants.map((restaurant) => {
+        return {
+            params: { restaurant: removeWhiteSpace(restaurant.name), id: restaurant.id },
+            props: { restaurant },
+        };
+    });
+}
+
+export const removeWhiteSpace = (text: string) => {
+    return text.split(' ').join('-');
+};
+---
+
+<h1>Hi theree</h1>

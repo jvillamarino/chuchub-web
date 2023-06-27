@@ -1,0 +1,18 @@
+---
+import type { Restaurant } from '../models/restaurant.interface';
+import RestaurantCard from './RestaurantCard.astro';
+
+const restaurants: Restaurant[] = await fetch(
+    'https://api.last.app/frontend-interview/restaurants'
+).then((response) => response.json());
+---
+
+<div class="restaurants-container">
+    {restaurants.map((restaurant) => <RestaurantCard data={restaurant} />)}
+</div>
+
+<style>
+    .restaurants-container {
+        @apply grid md:grid-cols-2 lg:grid-cols-3 gap-4 gap-y-4;
+    }
+</style>

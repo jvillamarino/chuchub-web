@@ -1,0 +1,87 @@
+---
+import type { Restaurant } from '../models/restaurant.interface';
+import { t } from 'i18next';
+import { Icon } from 'astro-icon';
+
+interface Props {
+    data: Restaurant;
+}
+
+const { data } = Astro.props;
+
+export const removeWhiteSpace = (text: string) => {
+    return text.split(' ').join('-');
+};
+---
+
+<div class="restaurant-card">
+    <img src={data.image} alt={`${data.name} Cover`} class="card__cover" />
+    <div class="card-content">
+        <div class="content-logo">
+            <img src={data.logo} alt={`${data.name} Logo`} class="content-logo__image" />
+        </div>
+        <div class="content-text">
+            <h1 class="content__title">{data.name}</h1>
+            <h1 class="content__subtitle">{t('common.fastfood')}</h1>
+            <a
+                href={`/${removeWhiteSpace(data.name)}/${data.id}`}
+                class="btn btn-circle btn-md absolute right-3 bottom-8 bg-orange-300 hover:bg-orange-400;"
+            >
+                <Icon name="ic:outline-arrow-circle-right" class="text-white" />
+            </a>
+            <div class="content-descriptive">
+                <div class="descriptive-rating">
+                    <Icon name="ph:star-light" class="descriptive-rating__icon" />
+                    <p class="descriptive-rating__text">
+                        {data.ratings.average} ({data.ratings.total})
+                    </p>
+                </div>
+                <div class="descriptive-rating">
+                    <Icon name="fluent:location-28-regular" class="descriptive-rating__icon" />
+                    <p class="descriptive-rating__text">16km</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <style>
+        .restaurant-card {
+            @apply relative w-full flex flex-col bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg hover:scale-[1.02] transition-all cursor-default;
+        }
+
+        .card-content {
+            @apply px-4 py-2 min-h-[8ch] flex flex-row;
+        }
+
+        .card__cover {
+            @apply bg-auto pointer-events-none h-48;
+        }
+
+        .content-logo {
+            @apply relative h-2 w-16;
+        }
+
+        .content-logo__image {
+            @apply absolute rounded-[14px] shadow-2xl w-14 -bottom-3 bg-white;
+        }
+
+        .content__title {
+            @apply font-bold text-[--lastBlack] md:text-xl;
+        }
+
+        .content__subtitle {
+            @apply text-[--lastGray] text-xs md:text-base;
+        }
+
+        .content-descriptive {
+            @apply flex flex-row gap-2;
+        }
+
+        .descriptive-rating {
+            @apply flex flex-row gap-1 items-center text-[--lastGray] text-xs md:text-base;
+        }
+        .descriptive-rating__icon {
+            @apply w-3 md:w-4;
+        }
+    </style>
+</div>
