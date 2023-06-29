@@ -2,16 +2,14 @@
 import type { Restaurant } from '../models/restaurant.interface';
 import { t } from 'i18next';
 import { Icon } from 'astro-icon';
+import { removeWhiteSpace } from '../common/functions/strings-manipulations.functions';
+import { localizePath } from 'astro-i18next';
 
 interface Props {
     data: Restaurant;
 }
 
 const { data } = Astro.props;
-
-export const removeWhiteSpace = (text: string) => {
-    return text.split(' ').join('-');
-};
 ---
 
 <div class="restaurant-card">
@@ -24,8 +22,8 @@ export const removeWhiteSpace = (text: string) => {
             <h1 class="content__title">{data.name}</h1>
             <h1 class="content__subtitle">{t('common.fastfood')}</h1>
             <a
-                href={`/${removeWhiteSpace(data.name)}/${data.id}`}
-                class="btn btn-circle btn-md absolute right-3 bottom-8 bg-orange-300 hover:bg-orange-400;"
+                href={localizePath(`/${removeWhiteSpace(data.name)}/${data.id}`)}
+                class="btn btn-circle btn-md absolute right-3 bottom-8 bg-orange-200 hover:bg-orange-400 bg-[100%] bg-[size:400%] transition hover:bg-[0]"
             >
                 <Icon name="ic:outline-arrow-circle-right" class="text-white" />
             </a>

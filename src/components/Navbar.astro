@@ -1,12 +1,27 @@
 ---
 import { LanguageSelector } from 'astro-i18next/components';
+import { localizePath } from 'astro-i18next';
 import { t } from 'i18next';
+
+export interface Props {
+    imageCoverUrl?: string;
+}
+
+const { imageCoverUrl } = Astro.props;
 ---
 
+{
+    imageCoverUrl && (
+        <img class="layout-image" src={imageCoverUrl} alt={`${t('common.restaurant')} Cover`} />
+    )
+}
+
 <nav class="layout-navbar">
-    <h1 class="layout-navbar__title">Chubchub</h1>
+    <a href={localizePath('/')} class="layout-navbar__title">
+        <img src="/chubchub-logo.png" alt="Chubchub logo" class="title__image" />
+    </a>
     <div class="navbar-items">
-        <a class="navbar__item">{t('navbar.home')}</a>
+        <a href={localizePath('/')} class="navbar__item">{t('navbar.home')}</a>
         <a class="navbar__item">{t('navbar.restaurants')}</a>
         <a class="navbar__item">{t('navbar.categories')}</a>
     </div>
@@ -16,7 +31,7 @@ import { t } from 'i18next';
 <style>
     .layout-navbar {
         @apply p-3 bg-gradient-to-r from-orange-300 to-orange-200 rounded-md m-2;
-        @apply flex justify-between items-center;
+        @apply flex justify-between items-center absolute top-0 inset-x-0;
     }
 
     .layout-navbar__title {
@@ -32,11 +47,19 @@ import { t } from 'i18next';
         @apply hover:text-orange-300 hover:bg-white hover:px-6 px-2 hover:rounded-full;
         @apply transition-all cursor-pointer duration-300;
     }
+
+    .layout-image {
+        @apply h-auto max-h-64;
+    }
+
+    .title__image {
+        @apply h-8;
+    }
 </style>
 
 <style>
     .layout-language {
-        @apply bg-[#7C3AED] text-white bg-opacity-10 p-2 rounded shadow-md text-sm hover:bg-opacity-100 cursor-pointer;
+        @apply w-4 sm:w-auto bg-[#7C3AED] text-white bg-opacity-0 sm:bg-opacity-10 sm:p-2 rounded sm:shadow-md text-sm hover:bg-opacity-100 cursor-pointer transition;
     }
 
     select.layout-language {

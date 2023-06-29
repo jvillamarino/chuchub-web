@@ -1,12 +1,12 @@
 ---
 import { changeLanguage, t } from "i18next";
-import type { Restaurant } from "../../models/restaurant.interface";
-import Layout from "../../layouts/Layout.astro";
+import type { Restaurant } from "../../../models/restaurant.interface";
+import Layout from "../../../layouts/Layout.astro";
 import { RESTAURANT_ENDPOINT, removeWhiteSpace } from "common";
 import Categories from "@components/Categories/Categories";
 import { Icon } from "astro-icon";
 
-changeLanguage("en");
+changeLanguage("es");
 
 export interface Props {
     restaurant: Restaurant;

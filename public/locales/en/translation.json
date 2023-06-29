@@ -13,6 +13,7 @@
   },
   "common": {
     "restaurants": "Outstanding restaurants",
-    "fastfood": "Fast food"
+    "fastfood": "Fast food",
+    "restaurant": "Restaurante"
   }
 }

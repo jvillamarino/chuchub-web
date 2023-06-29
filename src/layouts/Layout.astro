@@ -7,24 +7,26 @@ import Navbar from '../components/Navbar.astro';
 export interface Props {
 	title: string;
 	description: string;
+	favicon?: string;
+	imageCoverUrl?: string;
 }
 
-const { title, description } = Astro.props;
+const { title, description, favicon, imageCoverUrl } = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang={i18next.language}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={t(`pages.${description}`)} />
+		<meta name="description" content={t(`${description}`)} />
 		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" type="image/png" href={favicon ?? '/favicon.png'} />
 		<meta name="generator" content={Astro.generator} />
-		<title>{t(`pages.${title}`)}</title>
+		<title>{t(`${title}`)}</title>
 		<HeadHrefLangs />
 	</head>
 	<body>
-		<Navbar />
+		<Navbar {imageCoverUrl} />
 		<slot />
 
 		<style is:global>
@@ -43,10 +45,29 @@ const { title, description } = Astro.props;
 				font-family: 'Nunito Sans Variable', sans-serif;
 			}
 
+			* {
+				@apply transition-all;
+			}
+
+			h1,
+			h2,
+			h3,
+			h4,
+			h5,
+			h6,
+			p,
+			span,
+			img {
+				pointer-events: none;
+				user-select: none;
+			}
+
 			html,
 			body {
 				width: 100%;
 				min-width: 100%;
+				min-height: 100vh;
+				height: auto;
 				position: relative;
 				display: flex;
 				flex-direction: column;
