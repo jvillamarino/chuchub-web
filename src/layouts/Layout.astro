@@ -4,6 +4,7 @@ import i18next, { t } from 'i18next';
 import { HeadHrefLangs } from 'astro-i18next/components';
 import Navbar from '../components/Navbar.astro';
 
+export const prerender = true;
 export interface Props {
 	title: string;
 	description: string;
