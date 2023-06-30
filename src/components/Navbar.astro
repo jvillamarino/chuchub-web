@@ -27,6 +27,7 @@ const { imageCoverUrl } = Astro.props;
 }
 
 <nav class:list={['layout-navbar', imageCoverUrl && 'hidden']}>
+    <p>{imageCoverUrl}</p>
     <a href={localizePath('/')} class="layout-navbar__title">
         <img src="/chubchub-logo.png" alt="Chubchub logo" class="title__image" />
     </a>

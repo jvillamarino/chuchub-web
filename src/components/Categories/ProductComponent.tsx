@@ -9,6 +9,8 @@ export interface Props {
 export default function Product({ product: productData, updateQuantityCallback }: Props) {
   const [product, updateProduct] = useState(productData);
 
+  console.log(!!product.quantity || 'hidden');
+
   function handleUpdateQuantity(type: 'add' | 'remove') {
     let updatedProduct: Product = { ...product };
 
@@ -32,7 +34,9 @@ export default function Product({ product: productData, updateQuantityCallback }
         <p className="product-footer__price">{product.price.toString().replace('.', ',')} €</p>
         <div className="product-footer-actions">
           <button
-            className="footer__button btn-circle"
+            className={`footer__button btn-circle ${
+              !!product.quantity || 'footer__button--hidden'
+            }`}
             onClick={() => handleUpdateQuantity('remove')}
           >
             -
