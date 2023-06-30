@@ -9,8 +9,6 @@ export interface Props {
 export default function Product({ product: productData, updateQuantityCallback }: Props) {
   const [product, updateProduct] = useState(productData);
 
-  console.log(!!product.quantity || 'hidden');
-
   function handleUpdateQuantity(type: 'add' | 'remove') {
     let updatedProduct: Product = { ...product };
 

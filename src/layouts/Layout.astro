@@ -15,6 +15,7 @@ export interface Props {
 
 const { title, description, favicon, imageCoverUrl } = Astro.props;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
 const resolvedImageWithDomain = new URL(imageCoverUrl!, Astro.site).toString();
 ---
 

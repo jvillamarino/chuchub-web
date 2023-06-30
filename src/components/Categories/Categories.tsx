@@ -8,6 +8,8 @@ import {
   $restaurantsStore,
   updateProductQuantityByRestaurant,
   $queryFilter,
+  updateCart,
+  $cart,
 } from '@common/store';
 import { CatalogService } from '@common/services';
 
@@ -20,9 +22,11 @@ export default function Categories({ restaurantId }: Props) {
   const [products, updateProducts] = useState<Product[]>([]);
 
   const [filteredProducts, updateFilteredProducts] = useState<Product[]>([]);
+  const [allCategoryProducts, updateAllCategoryProducts] = useState<Product[]>([]);
 
   const restaurant = useStore($restaurantsStore);
   const queryFilter = useStore($queryFilter);
+  const cartStore = useStore($cart);
 
   useEffect(() => {
     getCatalogData();
@@ -63,9 +67,12 @@ export default function Categories({ restaurantId }: Props) {
     argCategories.forEach((category: Category) => (category.isSelected = false));
     selectedCategory.isSelected = true;
 
-    const filteredProducts = argsProducts.filter(
-      (product: Product) => product.category === selectedCategory.name
-    ) as Product[];
+    const filteredProducts =
+      selectedCategory.name === 'All' && allCategoryProducts.length
+        ? allCategoryProducts
+        : (argsProducts.filter(
+            (product: Product) => product.category === selectedCategory.name
+          ) as Product[]);
 
     updateFilteredProducts(filteredProducts);
   }
@@ -77,6 +84,7 @@ export default function Categories({ restaurantId }: Props) {
     );
     products[productIndex] = { ...products[productIndex], quantity: updatedProduct.quantity };
     updateProductQuantityByRestaurant(restaurantId, updatedProduct);
+    updateCart(updatedProduct);
   }
 
   function filterByQuery(query: string) {
@@ -91,6 +99,7 @@ export default function Categories({ restaurantId }: Props) {
 
     const allCategory: Category = getAllCategoryFromList();
     updateFilteredProducts([...filteredProducts]);
+    updateAllCategoryProducts([...filteredProducts]);
     handleChangeCategory(allCategory, categories, filteredProducts);
   }
 

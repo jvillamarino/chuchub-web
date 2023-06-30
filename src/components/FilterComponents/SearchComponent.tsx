@@ -1,7 +1,6 @@
-import { useStore } from '@nanostores/react';
-import './filter-components.css';
+import './filter.css';
 import { BaseSyntheticEvent, useEffect, useState } from 'react';
-import { updateQueryFilter, updateSearchShow } from '@common/store';
+import { updateQueryFilter } from '@common/store';
 
 export interface Props {
   children: React.ReactNode;
@@ -25,24 +24,15 @@ export default function SearchButton({ children, inputPlaceholder }: Props) {
     setQuery(event.target.value);
   }
 
-  function handleSearchShow() {
-    updateSearchShow();
-  }
-
   return (
     <div className="filter-container">
+      <span className="filter-icon">{children}</span>
       <input
         type="text"
         placeholder={inputPlaceholder}
         className="input input-bordered input-warning w-full max-w-[200px]"
         onChange={handleInputChange}
       />
-      <button
-        onClick={() => handleSearchShow()}
-        className="btn btn-circle btn-md bg-orange-200 hover:bg-orange-400"
-      >
-        {children}
-      </button>
     </div>
   );
 }

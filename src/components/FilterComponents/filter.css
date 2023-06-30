@@ -1,5 +1,9 @@
 .filter-container {
-  @apply flex flex-auto justify-end self-center mr-8 gap-6;
+  @apply flex flex-auto justify-end self-center mr-8 gap-6 relative;
+}
+
+.filter-icon {
+  @apply absolute right-2 top-[14px];
 }
 
 .favorite-button {

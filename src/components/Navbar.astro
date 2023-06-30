@@ -3,6 +3,7 @@ import { LanguageSelector } from 'astro-i18next/components';
 import { localizePath } from 'astro-i18next';
 import { t } from 'i18next';
 import { Icon } from 'astro-icon';
+import CartComponent from './Cart/CartComponent';
 
 export const prerender = true;
 export interface Props {
@@ -18,10 +19,15 @@ const { imageCoverUrl } = Astro.props;
             <img class="layout-image" src={imageCoverUrl} alt={`${t('common.restaurant')} Cover`} />
             <a
                 href={localizePath(`/`)}
-                class="btn btn-circle btn-md absolute bg-orange-200 hover:bg-orange-400  top-10 left-10"
+                class="btn btn-circle btn-md absolute bg-orange-200 hover:bg-orange-400 top-10 left-10"
             >
                 <Icon name="ic:outline-arrow-circle-left" class="text-white" />
             </a>
+            <div class="absolute top-10 right-10">
+                <CartComponent client:only="react" payButtonText={t('common.pay')}>
+                    <Icon name="mdi:cart-outline" class="text-white w-7" />
+                </CartComponent>
+            </div>
         </>
     )
 }

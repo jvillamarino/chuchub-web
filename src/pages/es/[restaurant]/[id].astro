@@ -72,7 +72,7 @@ const { restaurant: restaurantProps } = Astro.props;
 
                 <div class="hidden md:flex flex-auto">
                     <SearchComponent client:only="react" inputPlaceholder={t('common.filterBy')}>
-                        <Icon name="ion:search" class="text-white w-7" />
+                        <Icon name="ion:search" class="text-[--lastGray] w-5" />
                     </SearchComponent>
                 </div>
             </div>
@@ -80,7 +80,7 @@ const { restaurant: restaurantProps } = Astro.props;
             <div class="container-body">
                 <div class="inline-block md:hidden mr-auto">
                     <SearchComponent client:only="react" inputPlaceholder={t('common.filterBy')}>
-                        <Icon name="ion:search" class="text-white w-7" />
+                        <Icon name="ion:search" class="text-[--lastGray] w-5" />
                     </SearchComponent>
                 </div>
                 <Categories {restaurantId} client:only="react" />

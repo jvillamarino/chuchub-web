@@ -1,10 +1,9 @@
-import type { Category, Product, Restaurant } from '@models/restaurant.interface';
+import type { Product, Restaurant } from '@models/restaurant.interface';
 import type { RestaurantStore } from '@models/store.interface';
-import { atom, deepMap, listenKeys } from 'nanostores';
+import { deepMap } from 'nanostores';
+import { LOCALSTORAGE_FAVORITES_KEY, LOCALSTORAGE_RESTAURANT_KEY } from '..';
 
 // --- --- --- LOCALSTORAGE MANIPULATION --- --- --- //
-export const LOCALSTORAGE_RESTAURANT_KEY = 'restaurants';
-export const LOCALSTORAGE_FAVORITES_KEY = 'favorites';
 
 const getStorage = () => {
   return JSON.parse(localStorage.getItem(LOCALSTORAGE_RESTAURANT_KEY) ?? '{}');
