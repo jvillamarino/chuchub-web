@@ -26,8 +26,7 @@ const { imageCoverUrl } = Astro.props;
     )
 }
 
-<nav class:list={['layout-navbar', imageCoverUrl && 'hidden']}>
-    <p>{imageCoverUrl}</p>
+<nav class:list={['layout-navbar', imageCoverUrl && 'layout-navbar--hidden']}>
     <a href={localizePath('/')} class="layout-navbar__title">
         <img src="/chubchub-logo.png" alt="Chubchub logo" class="title__image" />
     </a>
@@ -42,6 +41,10 @@ const { imageCoverUrl } = Astro.props;
     .layout-navbar {
         @apply p-3 bg-gradient-to-r from-orange-300 to-orange-200 rounded-md m-2;
         @apply flex justify-between items-center absolute top-0 inset-x-0;
+    }
+
+    .layout-navbar--hidden {
+        @apply hidden;
     }
 
     .layout-navbar__title {
