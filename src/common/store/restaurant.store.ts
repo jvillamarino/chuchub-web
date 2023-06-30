@@ -1,7 +1,9 @@
 import type { Product, Restaurant } from '@models/restaurant.interface';
 import type { RestaurantStore } from '@models/store.interface';
 import { deepMap } from 'nanostores';
-import { LOCALSTORAGE_FAVORITES_KEY, LOCALSTORAGE_RESTAURANT_KEY } from '..';
+
+export const LOCALSTORAGE_RESTAURANT_KEY = 'restaurants';
+export const LOCALSTORAGE_FAVORITES_KEY = 'favorites';
 
 // --- --- --- LOCALSTORAGE MANIPULATION --- --- --- //
 

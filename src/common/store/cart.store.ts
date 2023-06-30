@@ -1,6 +1,7 @@
 import type { Product } from '@models/restaurant.interface';
 import { atom } from 'nanostores';
-import { LOCALSTORAGE_CART_KEY } from '..';
+
+export const LOCALSTORAGE_CART_KEY = 'cart';
 
 export const setCart = (data: Product[]) => {
   $cart.set(data);
