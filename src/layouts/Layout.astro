@@ -3,6 +3,7 @@ import '@fontsource-variable/nunito-sans';
 import i18next, { t } from 'i18next';
 import { HeadHrefLangs } from 'astro-i18next/components';
 import Navbar from '../components/Navbar.astro';
+import { SEO } from 'astro-seo';
 
 export const prerender = true;
 export interface Props {
@@ -13,18 +14,42 @@ export interface Props {
 }
 
 const { title, description, favicon, imageCoverUrl } = Astro.props;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+const resolvedImageWithDomain = new URL(imageCoverUrl!, Astro.site).toString();
 ---
 
 <!DOCTYPE html>
 <html lang={i18next.language}>
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="description" content={t(`${description}`)} />
+		<meta name="description" content={description} />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/png" href={favicon ?? '/favicon.png'} />
 		<meta name="generator" content={Astro.generator} />
-		<title>{t(`${title}`)}</title>
+		<title>{title}</title>
 		<HeadHrefLangs />
+
+		<SEO
+			title={title}
+			description={description}
+			canonical={canonicalURL}
+			twitter={{
+				creator: '',
+				site: '',
+				card: 'app',
+			}}
+			openGraph={{
+				basic: {
+					url: canonicalURL,
+					type: 'website',
+					title: `Chubchub - Plataforma de restaurantes para comensales`,
+					image: resolvedImageWithDomain,
+				},
+				image: {
+					alt: 'Chubchub solución 360 para restaurantes',
+				},
+			}}
+		/>
 	</head>
 	<body>
 		<Navbar {imageCoverUrl} />

@@ -1,15 +1,15 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { t, changeLanguage } from "i18next";
-import { Trans } from "astro-i18next/components";
-import Restaurants from "../components/Restaurants.astro";
+import Layout from '../layouts/Layout.astro';
+import { t, changeLanguage } from 'i18next';
+import { Trans } from 'astro-i18next/components';
+import Restaurants from '../components/Restaurants.astro';
 
-changeLanguage("en");
+changeLanguage('en');
 
 export const prerender = true;
 ---
 
-<Layout title="pages.home.title" description="pages.home.description">
+<Layout title={t('pages.home.title')} description={t('pages.home.description')}>
 	<main class="main-container">
 		<div class="home-container">
 			<h1 class="container__title">
