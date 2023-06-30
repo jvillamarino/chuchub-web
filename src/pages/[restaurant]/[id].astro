@@ -46,10 +46,10 @@ const { restaurant: restaurantProps } = Astro.props;
                     />
                 </div>
                 <div class="header-texts">
-                    <div class="flex gap-4 items-center">
+                    <div class="flex gap-2 sm:gap-4 items-center">
                         <h1 class="header__title">{restaurantProps.name}</h1>
                         <FavoriteButton client:only="react" restaurant={restaurantProps!}>
-                            <Icon name="ph:heart" class="text-[--lastGray] w-6" />
+                            <Icon name="ph:heart" class="text-[--lastGray] w-4 sm:w-6" />
                         </FavoriteButton>
                     </div>
                     <h1 class="header__subtitle">{t('common.fastfood')}</h1>
@@ -114,7 +114,7 @@ const { restaurant: restaurantProps } = Astro.props;
     }
 
     .header__title {
-        @apply font-bold text-[--lastBlack] text-xl sm:text-2xl md:text-4xl;
+        @apply font-bold text-[--lastBlack] text-base sm:text-2xl md:text-4xl;
     }
 
     .header__subtitle {

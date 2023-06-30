@@ -13,7 +13,7 @@
 }
 
 .categories-products {
-  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center gap-4;
+  @apply grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-stretch gap-4;
 }
 
 .product {
@@ -21,7 +21,7 @@
 }
 
 .product__image {
-  @apply h-auto w-auto max-h-36 sm:max-h-40 rounded-lg mx-auto;
+  @apply h-auto w-auto min-h-[86px] md:min-h-[154px] max-h-36 sm:max-h-40 rounded-lg mx-auto;
 }
 
 .product__name {
@@ -29,7 +29,7 @@
 }
 
 .product-footer {
-  @apply flex flex-auto flex-wrap justify-between items-center;
+  @apply flex flex-auto flex-wrap justify-between items-end;
 }
 
 .product-footer__price {

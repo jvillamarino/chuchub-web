@@ -9,24 +9,21 @@ export interface Props {
 }
 
 export default function Cart({ children, payButtonText }: Props) {
-  const [totalProducts, updateTotalProducts] = useState(0);
   const [totalAmount, updateTotalAmount] = useState(0);
-  const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const cart: Product[] = useStore($cart);
   useEffect(() => {
     const mapProducts = cart.map(({ quantity, price }) => ({ quantity, price }));
-    const total = mapProducts.reduce((accumulator, product) => accumulator + product.quantity!, 0);
     const totalAmount = mapProducts.reduce(
       (accumulator, product) => accumulator + product.quantity! * product.price,
       0
     );
-    updateTotalProducts(total);
     updateTotalAmount(totalAmount);
   }, [cart]);
 
   return (
-    <div className="dropdown dropdown-end" onClick={() => setShowDropdown(!showDropdown)}>
+    <div className="dropdown dropdown-end">
       <label
         tabIndex={0}
         className={`btn btn-circle btn-md ${cart.length && 'btn-primary bg-opacity-80'}`}
@@ -58,8 +55,12 @@ export default function Cart({ children, payButtonText }: Props) {
             <span className="font-bold text-lg">Total: {totalAmount.toFixed(2)} €</span>
           </div>
           <div className="card-actions">
-            <button className="btn btn-block bg-orange-300 hover:bg-orange-400 text-white border">
-              {payButtonText}
+            <button
+              className="btn btn-block bg-orange-300 hover:bg-orange-400 text-white border"
+              onClick={() => setLoading(true)}
+            >
+              {isLoading && <span className="loading loading-spinner"></span>}
+              {!isLoading && payButtonText}
             </button>
           </div>
         </div>
