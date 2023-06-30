@@ -1,23 +1,25 @@
-import { $restaurantsStore, markAsFavorite } from '@common/store';
+import { $restaurantsStore, addFavorite, markAsFavorite } from '@common/store';
+import type { Restaurant } from '@models/restaurant.interface';
 import { useStore } from '@nanostores/react';
 
 export interface Props {
   children: React.ReactNode;
-  restaurantId: string;
+  restaurant: Restaurant;
 }
 
-export default function FavoriteButton({ restaurantId, children }: Props) {
-  const restaurant = useStore($restaurantsStore)[restaurantId];
+export default function FavoriteButton({ restaurant, children }: Props) {
+  const selectedRestaurant = useStore($restaurantsStore)[restaurant.id];
 
   function handleMarkAsFavorite() {
-    markAsFavorite(restaurantId);
+    markAsFavorite(restaurant.id);
+    addFavorite(restaurant);
   }
 
   return (
     <button
       onClick={() => handleMarkAsFavorite()}
-      className={`btn btn-circle btn-md absolute bg-orange-200 hover:bg-orange-400  top-10 right-10 ${
-        restaurant?.isFavorite && 'bg-orange-400'
+      className={`btn btn-circle btn-sm  hover:bg-orange-200 ${
+        selectedRestaurant?.isFavorite && 'favorite-button'
       }`}
     >
       {children}

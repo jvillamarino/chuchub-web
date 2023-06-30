@@ -2,7 +2,6 @@ import type { Product, Category } from '@models/restaurant.interface';
 import './categories.css';
 import { useEffect, useState } from 'react';
 import ProductComponent from '@components/Categories/ProductComponent';
-import { CATALOG_ENDPOINT } from '@common/environments.constants';
 import { useStore } from '@nanostores/react';
 import {
   addRestaurant,
@@ -10,6 +9,7 @@ import {
   updateProductQuantityByRestaurant,
   $queryFilter,
 } from '@common/store';
+import { CatalogService } from '@common/services';
 
 export interface Props {
   restaurantId: string;
@@ -18,6 +18,8 @@ export interface Props {
 export default function Categories({ restaurantId }: Props) {
   const [categories, updateCategories] = useState<Category[]>([]);
   const [products, updateProducts] = useState<Product[]>([]);
+
+  const [filteredProducts, updateFilteredProducts] = useState<Product[]>([]);
 
   const restaurant = useStore($restaurantsStore);
   const queryFilter = useStore($queryFilter);
@@ -36,46 +38,65 @@ export default function Categories({ restaurantId }: Props) {
 
   async function getCatalogData() {
     let categories: Category[] = [];
+    let products: Product[] = [];
 
     if (!(restaurantId in restaurant)) {
-      categories = await fetch(CATALOG_ENDPOINT(restaurantId)).then((res) => res.json());
-      addRestaurant({ [restaurantId]: { categories, isFavorite: false } });
+      const data = await CatalogService.getCatalogData(restaurantId);
+      categories = data.categories;
+      products = data.products;
+      addRestaurant({ [restaurantId]: { categories, products, isFavorite: false } });
     } else {
       categories = restaurant[Number(restaurantId)].categories;
+      products = restaurant[Number(restaurantId)].products;
     }
 
-    categories[0].isSelected = true;
     updateCategories([...categories]);
-    updateProducts(categories[0].products);
+    updateProducts([...products]);
+    handleChangeCategory(categories[0], categories, products);
   }
 
-  function handleChangeCategory(selectedCategory: Category) {
-    categories.forEach((category: Category) => (category.isSelected = false));
+  function handleChangeCategory(
+    selectedCategory: Category,
+    argCategories: Category[] = categories,
+    argsProducts: Product[] = products
+  ) {
+    argCategories.forEach((category: Category) => (category.isSelected = false));
     selectedCategory.isSelected = true;
-    updateProducts(selectedCategory.products);
+
+    const filteredProducts = argsProducts.filter(
+      (product: Product) => product.category === selectedCategory.name
+    ) as Product[];
+
+    updateFilteredProducts(filteredProducts);
   }
 
-  function handleUpdateQuantityCallback(product: Product, index: number) {
-    products[index] = product;
-    updateProductQuantityByRestaurant(restaurantId, product);
+  function handleUpdateQuantityCallback(updatedProduct: Product, index: number) {
+    filteredProducts[index] = updatedProduct;
+    const productIndex: number = products.findIndex(
+      (product: Product) => product.name === updatedProduct.name
+    );
+    products[productIndex] = { ...products[productIndex], quantity: updatedProduct.quantity };
+    updateProductQuantityByRestaurant(restaurantId, updatedProduct);
   }
 
   function filterByQuery(query: string) {
-    const flattenProducts: Product[] = restaurant[Number(restaurantId)].categories.flatMap(
-      (category: Category) => category.products
-    );
-
-    const filteredProducts = flattenProducts.filter((product: Product) =>
+    let filteredProducts = products.filter((product: Product) =>
       product.name.toLowerCase().includes(query.toLowerCase())
     );
 
-    const allCategory: Category = getAllCategoryFromList(filteredProducts);
-    handleChangeCategory(allCategory);
+    filteredProducts = filteredProducts.map((product: Product) => ({
+      ...product,
+      category: 'All',
+    }));
+
+    const allCategory: Category = getAllCategoryFromList();
+    updateFilteredProducts([...filteredProducts]);
+    handleChangeCategory(allCategory, categories, filteredProducts);
   }
 
-  function getAllCategoryFromList(products: Product[]): Category {
+  function getAllCategoryFromList(): Category {
     const categoryIndex = categories.findIndex((category: Category) => category.name === 'All');
-    const allCategory: Category = { name: 'All', products, isSelected: true };
+    const allCategory: Category = { name: 'All', isSelected: true };
     if (categoryIndex === -1) {
       updateCategories([allCategory, ...categories]);
     } else {
@@ -90,6 +111,7 @@ export default function Categories({ restaurantId }: Props) {
     const [, ...restCategories] = categories;
 
     updateCategories([...restCategories]);
+    updateFilteredProducts([...products]);
     handleChangeCategory(restCategories[0]);
   }
 
@@ -108,7 +130,7 @@ export default function Categories({ restaurantId }: Props) {
       </div>
 
       <div className="categories-products">
-        {products.map((product: Product, index: number) => (
+        {filteredProducts.map((product: Product, index: number) => (
           <ProductComponent
             updateQuantityCallback={(product: Product) =>
               handleUpdateQuantityCallback(product, index)

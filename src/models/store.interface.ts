@@ -1,4 +1,4 @@
-import type { Category } from './restaurant.interface';
+import type { Category, Product } from './restaurant.interface';
 
 /**
  * RestaurantCatalog
@@ -10,5 +10,6 @@ export interface RestaurantStore {
   [id: string]: {
     isFavorite?: boolean;
     categories: Category[];
+    products: Product[];
   };
 }

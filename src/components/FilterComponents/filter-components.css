@@ -1,3 +1,10 @@
 .filter-container {
   @apply flex flex-auto justify-end self-center mr-8 gap-6;
 }
+
+.favorite-button {
+  @apply bg-orange-300 transition-colors;
+}
+.favorite-button svg {
+  @apply text-white transition-colors;
+}

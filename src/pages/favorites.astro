@@ -1,0 +1,13 @@
+---
+import { changeLanguage } from "i18next";
+import Layout from "@layouts/Layout.astro";
+import { FavoriteRestaurants } from "../components/FavoriteRestaurants";
+
+changeLanguage("en");
+---
+
+<Layout title="navbar.myFavorites" description="pages.home.description">
+    <div class="mt-40">
+        <FavoriteRestaurants client:only="react" />
+    </div>
+</Layout>

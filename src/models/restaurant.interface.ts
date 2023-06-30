@@ -42,7 +42,7 @@ interface Coordinate {
 export interface Category {
   name: string;
   isSelected?: boolean;
-  products: Product[];
+  products?: Product[];
 }
 
 /**
@@ -56,4 +56,5 @@ export interface Product {
   image: string;
   price: number;
   quantity?: number;
+  category?: string;
 }

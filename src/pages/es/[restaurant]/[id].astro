@@ -35,7 +35,6 @@ const { restaurant: restaurantProps } = Astro.props;
     favicon={restaurantProps.logo}
     imageCoverUrl={restaurantProps.image}
 >
-    <!-- <img src={restaurantProps.image} alt={`${t('common.restaurant')} - ${restaurant} Cover`} /> -->
     <main class="main-page">
         <div class="main-container">
             <div class="container-header">
@@ -47,7 +46,12 @@ const { restaurant: restaurantProps } = Astro.props;
                     />
                 </div>
                 <div class="header-texts">
-                    <h1 class="header__title">{restaurantProps.name}</h1>
+                    <div class="flex gap-4 items-center">
+                        <h1 class="header__title">{restaurantProps.name}</h1>
+                        <FavoriteButton client:only="react" restaurant={restaurantProps!}>
+                            <Icon name="ph:heart" class="text-[--lastGray] w-6" />
+                        </FavoriteButton>
+                    </div>
                     <h1 class="header__subtitle">{t('common.fastfood')}</h1>
                     <div class="header-descriptive">
                         <div class="descriptive-rating">
@@ -65,15 +69,20 @@ const { restaurant: restaurantProps } = Astro.props;
                         </div>
                     </div>
                 </div>
-                <!-- <FavoriteButton client:only="react" restaurantId={restaurantId!}>
-                    <Icon name="ph:star-light" class="text-white w-7" />
-                </FavoriteButton> -->
-                <SearchComponent client:only="react" inputPlaceholder={t('common.filterBy')}>
-                    <Icon name="ion:search" class="text-white w-7" />
-                </SearchComponent>
+
+                <div class="hidden md:flex flex-auto">
+                    <SearchComponent client:only="react" inputPlaceholder={t('common.filterBy')}>
+                        <Icon name="ion:search" class="text-white w-7" />
+                    </SearchComponent>
+                </div>
             </div>
 
             <div class="container-body">
+                <div class="inline-block md:hidden mr-auto">
+                    <SearchComponent client:only="react" inputPlaceholder={t('common.filterBy')}>
+                        <Icon name="ion:search" class="text-white w-7" />
+                    </SearchComponent>
+                </div>
                 <Categories {restaurantId} client:only="react" />
             </div>
         </div>
@@ -98,7 +107,7 @@ const { restaurant: restaurantProps } = Astro.props;
     }
 
     .container-body {
-        @apply flex flex-auto w-full p-4;
+        @apply flex flex-auto w-full p-4 flex-col gap-8;
     }
     .header-texts {
         @apply mt-4;

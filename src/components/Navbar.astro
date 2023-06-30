@@ -3,14 +3,12 @@ import { LanguageSelector } from 'astro-i18next/components';
 import { localizePath } from 'astro-i18next';
 import { t } from 'i18next';
 import { Icon } from 'astro-icon';
-import FavoriteButton from './NavbarButtons/FavoriteButton';
 
 export interface Props {
     imageCoverUrl?: string;
 }
 
 const { imageCoverUrl } = Astro.props;
-const { id: restaurantId } = Astro.params;
 ---
 
 {
@@ -33,7 +31,7 @@ const { id: restaurantId } = Astro.params;
     </a>
     <div class="navbar-items">
         <a href={localizePath('/')} class="navbar__item">{t('navbar.home')}</a>
-        <a class="navbar__item">{t('navbar.restaurants')}</a>
+        <a href={localizePath('/favorites')} class="navbar__item">{t('navbar.myFavorites')}</a>
     </div>
     <LanguageSelector showFlag={true} class="layout-language" />
 </nav>
@@ -56,6 +54,7 @@ const { id: restaurantId } = Astro.params;
     .navbar__item {
         @apply hover:text-orange-300 hover:bg-white hover:px-6 px-2 hover:rounded-full;
         @apply transition-all cursor-pointer duration-300;
+        @apply hidden;
     }
 
     .layout-image {

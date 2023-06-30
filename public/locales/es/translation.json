@@ -8,7 +8,7 @@
   },
   "navbar": {
     "home": "Inicio",
-    "restaurants": "Restaurantes"
+    "myFavorites": "Mis favoritos"
   },
   "common": {
     "restaurants": "Restaurantes destacados",
