@@ -6,6 +6,9 @@ import type { Category } from './restaurant.interface';
  * @export
  * @interface RestaurantCatalog
  */
-export interface RestaurantCatalog {
-  [id: number]: Category[];
+export interface RestaurantStore {
+  [id: string]: {
+    isFavorite?: boolean;
+    categories: Category[];
+  };
 }

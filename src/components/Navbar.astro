@@ -2,28 +2,38 @@
 import { LanguageSelector } from 'astro-i18next/components';
 import { localizePath } from 'astro-i18next';
 import { t } from 'i18next';
+import { Icon } from 'astro-icon';
+import FavoriteButton from './NavbarButtons/FavoriteButton';
 
 export interface Props {
     imageCoverUrl?: string;
 }
 
 const { imageCoverUrl } = Astro.props;
+const { id: restaurantId } = Astro.params;
 ---
 
 {
     imageCoverUrl && (
-        <img class="layout-image" src={imageCoverUrl} alt={`${t('common.restaurant')} Cover`} />
+        <>
+            <img class="layout-image" src={imageCoverUrl} alt={`${t('common.restaurant')} Cover`} />
+            <a
+                href={localizePath(`/`)}
+                class="btn btn-circle btn-md absolute bg-orange-200 hover:bg-orange-400  top-10 left-10"
+            >
+                <Icon name="ic:outline-arrow-circle-left" class="text-white" />
+            </a>
+        </>
     )
 }
 
-<nav class="layout-navbar">
+<nav class:list={['layout-navbar', imageCoverUrl && 'hidden']}>
     <a href={localizePath('/')} class="layout-navbar__title">
         <img src="/chubchub-logo.png" alt="Chubchub logo" class="title__image" />
     </a>
     <div class="navbar-items">
         <a href={localizePath('/')} class="navbar__item">{t('navbar.home')}</a>
         <a class="navbar__item">{t('navbar.restaurants')}</a>
-        <a class="navbar__item">{t('navbar.categories')}</a>
     </div>
     <LanguageSelector showFlag={true} class="layout-language" />
 </nav>
@@ -49,7 +59,7 @@ const { imageCoverUrl } = Astro.props;
     }
 
     .layout-image {
-        @apply h-auto max-h-64;
+        @apply h-auto max-h-80 relative;
     }
 
     .title__image {

@@ -1,19 +1,22 @@
 {
   "pages": {
     "home": {
-      "title": "Waiters Hub - Home",
-      "description": "Power up your hospitality with Waiter Hub.",
+      "title": "Chubchub - Home",
+      "description": "Power up your hospitality with Chubchub.",
       "discoverTitle": "Discover and order at <0>Chubchub's</0> most outstanding and renowned restaurants."
     }
   },
   "navbar": {
     "home": "Home",
-    "restaurants": "Restaurants",
-    "categories": "Categories"
+    "restaurants": "Restaurants"
   },
   "common": {
     "restaurants": "Outstanding restaurants",
     "fastfood": "Fast food",
-    "restaurant": "Restaurante"
+    "restaurant": "Restaurante",
+    "BURGERS": "Burgers",
+    "DRINKS": "Drinks",
+    "MENUS": "Menus",
+    "filterBy": "Filter your tastes"
   }
 }

@@ -1,12 +1,14 @@
 ---
-import { changeLanguage, t } from "i18next";
-import type { Restaurant } from "../../models/restaurant.interface";
-import Layout from "../../layouts/Layout.astro";
-import { RESTAURANT_ENDPOINT, removeWhiteSpace } from "common";
-import Categories from "@components/Categories/Categories";
-import { Icon } from "astro-icon";
+import { changeLanguage, t } from 'i18next';
+import type { Restaurant } from '../../models/restaurant.interface';
+import Layout from '../../layouts/Layout.astro';
+import { RESTAURANT_ENDPOINT, removeWhiteSpace } from 'common';
+import Categories from '@components/Categories/Categories';
+import { Icon } from 'astro-icon';
+import FavoriteButton from '@components/FilterComponents/FavoriteButton';
+import SearchComponent from '@components/FilterComponents/SearchComponent';
 
-changeLanguage("en");
+changeLanguage('en');
 
 export interface Props {
     restaurant: Restaurant;
@@ -63,6 +65,12 @@ const { restaurant: restaurantProps } = Astro.props;
                         </div>
                     </div>
                 </div>
+                <!-- <FavoriteButton client:only="react" restaurantId={restaurantId!}>
+                    <Icon name="ph:star-light" class="text-white w-7" />
+                </FavoriteButton> -->
+                <SearchComponent client:only="react" inputPlaceholder={t('common.filterBy')}>
+                    <Icon name="ion:search" class="text-white w-7" />
+                </SearchComponent>
             </div>
 
             <div class="container-body">
@@ -97,7 +105,7 @@ const { restaurant: restaurantProps } = Astro.props;
     }
 
     .header__title {
-        @apply font-bold text-[--lastBlack] text-sm sm:text-2xl md:text-4xl;
+        @apply font-bold text-[--lastBlack] text-xl sm:text-2xl md:text-4xl;
     }
 
     .header__subtitle {

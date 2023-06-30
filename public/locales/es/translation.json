@@ -1,19 +1,22 @@
 {
   "pages": {
     "home": {
-      "title": "Waiters Hub - Principal",
-      "description": "Potencia tu hospitalidad con Waiter Hub",
+      "title": "Chubchub - Principal",
+      "description": "Potencia tu hospitalidad con Chubchub",
       "discoverTitle": "Descubre y pide en los restaurantes más destacados y reconocidos de <0>Chubchub</0>"
     }
   },
   "navbar": {
     "home": "Inicio",
-    "restaurants": "Restaurantes",
-    "categories": "Categorias"
+    "restaurants": "Restaurantes"
   },
   "common": {
     "restaurants": "Restaurantes destacados",
     "fastfood": "Comida rápida",
-    "restaurant": "Restaurante"
+    "restaurant": "Restaurante",
+    "BURGERS": "Hamburguesas",
+    "DRINKS": "Bebidas",
+    "MENUS": "Menus",
+    "filterBy": "Filtra tus gustos"
   }
 }
