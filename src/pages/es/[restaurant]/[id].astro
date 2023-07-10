@@ -1,14 +1,14 @@
 ---
-import { changeLanguage, t } from "i18next";
-import type { Restaurant } from "../../../models/restaurant.interface";
-import Layout from "../../../layouts/Layout.astro";
-import { RESTAURANT_ENDPOINT, removeWhiteSpace } from "common";
-import Categories from "@components/Categories/Categories";
-import { Icon } from "astro-icon";
-import FavoriteButton from "@components/FilterComponents/FavoriteButton";
-import SearchComponent from "@components/FilterComponents/SearchComponent";
+import { changeLanguage, t } from 'i18next';
+import type { Restaurant } from '../../../models/restaurant.interface';
+import Layout from '../../../layouts/Layout.astro';
+import { RESTAURANT_ENDPOINT, removeWhiteSpace } from 'common';
+import Categories from '@components/Categories/Categories';
+import { Icon } from 'astro-icon';
+import FavoriteButton from '@components/FilterComponents/FavoriteButton';
+import SearchComponent from '@components/FilterComponents/SearchComponent';
 
-changeLanguage("es");
+changeLanguage('es');
 
 export interface Props {
     restaurant: Restaurant;
@@ -21,11 +21,13 @@ export const prerender = true;
 export async function getStaticPaths() {
     const restaurants: Restaurant[] = await fetch(RESTAURANT_ENDPOINT)
         .then((res) => res.json())
-        .then((response) => response.map((element: Restaurant) => ({
-        ...element,
-        ratings: { total: "456", average: "4.5" },
-        coordinates: { latitude: 41.4046141, longitude: 2.1732208 },
-    })));
+        .then((response) =>
+            response.map((element: Restaurant) => ({
+                ...element,
+                ratings: { total: '456', average: '4.5' },
+                coordinates: { latitude: 41.4046141, longitude: 2.1732208 },
+            }))
+        );
     return restaurants.map((restaurant) => ({
         params: { restaurant: removeWhiteSpace(restaurant.name), id: restaurant.id },
         props: { restaurant },
@@ -89,7 +91,7 @@ const { restaurant: restaurantProps } = Astro.props;
                         <Icon name="ion:search" class="text-[--lastGray] w-5" />
                     </SearchComponent>
                 </div>
-                <Categories {restaurantId} client:only="react" />
+                <Categories restaurantId="1" client:only="react" />
             </div>
         </div>
     </main>
