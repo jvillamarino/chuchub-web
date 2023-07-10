@@ -19,7 +19,13 @@ export interface Params {
 }
 export const prerender = true;
 export async function getStaticPaths() {
-    const restaurants: Restaurant[] = await fetch(RESTAURANT_ENDPOINT).then((res) => res.json());
+    const restaurants: Restaurant[] = await fetch(RESTAURANT_ENDPOINT)
+        .then((res) => res.json())
+        .then((response) => response.map((element: Restaurant) => ({
+        ...element,
+        ratings: { total: "456", average: "4.5" },
+        coordinates: { latitude: 41.4046141, longitude: 2.1732208 },
+    })));
     return restaurants.map((restaurant) => ({
         params: { restaurant: removeWhiteSpace(restaurant.name), id: restaurant.id },
         props: { restaurant },

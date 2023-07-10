@@ -1,10 +1,17 @@
 ---
+import { RESTAURANT_ENDPOINT } from '@common/environments.constants';
 import type { Restaurant } from '../models/restaurant.interface';
 import RestaurantCard from './RestaurantCard.astro';
 
-const restaurants: Restaurant[] = await fetch(
-    'https://api.last.app/frontend-interview/restaurants'
-).then((response) => response.json());
+const restaurants: Restaurant[] = await fetch(RESTAURANT_ENDPOINT)
+    .then((response) => response.json())
+    .then((response) =>
+        response.map((element: Restaurant) => ({
+            ...element,
+            ratings: { total: '456', average: '4.5' },
+            coordinates: { latitude: 41.4046141, longitude: 2.1732208 },
+        }))
+    );
 ---
 
 <div class="restaurants-container">
