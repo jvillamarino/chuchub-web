@@ -1,14 +1,14 @@
 ---
-import { changeLanguage, t } from 'i18next';
-import type { Restaurant } from '../../../models/restaurant.interface';
-import Layout from '../../../layouts/Layout.astro';
-import { RESTAURANT_ENDPOINT, removeWhiteSpace } from 'common';
-import Categories from '@components/Categories/Categories';
-import { Icon } from 'astro-icon';
-import FavoriteButton from '@components/FilterComponents/FavoriteButton';
-import SearchComponent from '@components/FilterComponents/SearchComponent';
+import { changeLanguage, t } from "i18next";
+import type { Restaurant } from "../../../models/restaurant.interface";
+import Layout from "../../../layouts/Layout.astro";
+import { RESTAURANT_ENDPOINT, removeWhiteSpace } from "common";
+import Categories from "@components/Categories/Categories";
+import { Icon } from "astro-icon";
+import FavoriteButton from "@components/FilterComponents/FavoriteButton";
+import SearchComponent from "@components/FilterComponents/SearchComponent";
 
-changeLanguage('es');
+changeLanguage("es");
 
 export interface Props {
     restaurant: Restaurant;
@@ -18,23 +18,26 @@ export interface Params {
     restaurant: string;
 }
 export const prerender = false;
-export async function getStaticPaths() {
-    const restaurants: Restaurant[] = await fetch(RESTAURANT_ENDPOINT)
-        .then((res) => res.json())
-        .then((response) =>
-            response.map((element: Restaurant) => ({
-                ...element,
-                ratings: { total: '456', average: '4.5' },
-                coordinates: { latitude: 41.4046141, longitude: 2.1732208 },
-            }))
-        );
-    return restaurants.map((restaurant) => ({
-        params: { restaurant: removeWhiteSpace(restaurant.name), id: restaurant.id },
-        props: { restaurant },
-    }));
-}
+// export async function getStaticPaths() {
+//     const restaurants: Restaurant[] = await fetch(RESTAURANT_ENDPOINT)
+//         .then((res) => res.json())
+//         .then((response) =>
+//             response.map((element: Restaurant) => ({
+//                 ...element,
+//                 ratings: { total: '456', average: '4.5' },
+//                 coordinates: { latitude: 41.4046141, longitude: 2.1732208 },
+//             }))
+//         );
+//     return restaurants.map((restaurant) => ({
+//         params: { restaurant: removeWhiteSpace(restaurant.name), id: restaurant.id },
+//         props: { restaurant },
+//     }));
+// }
 const { restaurant, id: restaurantId }: Params = Astro.params as any as Params;
-const { restaurant: restaurantProps } = Astro.props;
+// const { restaurant: restaurantProps } = Astro.props;
+const restaurantProps = await fetch(RESTAURANT_ENDPOINT)
+    .then((response) => response.json())
+    .then((response) => response[0]);
 ---
 
 <Layout
@@ -65,7 +68,9 @@ const { restaurant: restaurantProps } = Astro.props;
                         <div class="descriptive-rating">
                             <Icon name="ph:star-light" class="descriptive-rating__icon" />
                             <p class="descriptive-rating__text">
-                                {restaurantProps.ratings.average} ({restaurantProps.ratings.total})
+                                {restaurantProps?.ratings?.average} ({
+                                    restaurantProps?.ratings?.total ?? 0
+                                })
                             </p>
                         </div>
                         <div class="descriptive-rating">
